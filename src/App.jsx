@@ -1,50 +1,46 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Accueil from './components/Accueil'
-import Formation from './components/Formation'
-import PlansSoins from './components/PlansSoins'
-import Communaute from './components/Communaute'
-import Tarifs from './components/Tarifs'
-import APropos from './components/APropos'
-import BackgroundEffect from './components/BackgroundEffect'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import Accueil from './components/Accueil.jsx'
+import Formation from './components/Formation.jsx'
+import PlansSoins from './components/PlansSoins.jsx'
+import Communaute from './components/Communaute.jsx'
+import Tarifs from './components/Tarifs.jsx'
+import APropos from './components/APropos.jsx'
+import BackgroundEffect from './components/BackgroundEffect.jsx'
+import Navbar from './components/Navbar.jsx'
+import Auth from './components/Auth.jsx'
+import Profile from './components/Profile.jsx'
+import { useEffect } from 'react';
 // La page APropos sera créée ensuite
+
+function ScrollToTop() {
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+  return null;
+}
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-[#10171a] text-white">
         <BackgroundEffect />
-        {/* Header */}
-        <header className="bg-transparent p-2 max-h-16">
-          <div className="flex justify-between items-center pl-2 pr-4">
-            <Link to="/">
-              <img src="/geroslogo.png" alt="Logo Geros" className="h-20 w-auto object-contain cursor-pointer" />
-            </Link>
-            <nav>
-              <ul className="flex space-x-10">
-                <li><Link to="/" className="nav-holo">Accueil</Link></li>
-                <li><Link to="/formation" className="nav-holo">Formation</Link></li>
-                <li><Link to="/plans-soins" className="nav-holo">Plans de soins</Link></li>
-                <li><Link to="/communaute" className="nav-holo">Communauté</Link></li>
-                <li><Link to="/tarifs" className="nav-holo">Tarifs</Link></li>
-                <li><Link to="/a-propos" className="nav-holo">À propos</Link></li>
-              </ul>
-            </nav>
-          </div>
-        </header>
-
-        {/* Main Content */}
-        <main className="container mx-auto p-4">
-          <Routes>
-            <Route path="/" element={<Accueil />} />
-            <Route path="/formation" element={<Formation />} />
-            <Route path="/plans-soins" element={<PlansSoins />} />
-            <Route path="/communaute" element={<Communaute />} />
-            <Route path="/tarifs" element={<Tarifs />} />
-            <Route path="/a-propos" element={<APropos />} />
-          </Routes>
-        </main>
-
-        {/* Footer */}
+        <Navbar />
+        <div className="pt-20"> {/* Pour ne pas masquer le contenu sous la navbar fixe */}
+          <ScrollToTop />
+          <main className="container mx-auto p-4">
+            <Routes>
+              <Route path="/" element={<Accueil />} />
+              <Route path="/formation" element={<Formation />} />
+              <Route path="/plans-soins" element={<PlansSoins />} />
+              <Route path="/communaute" element={<Communaute />} />
+              <Route path="/tarifs" element={<Tarifs />} />
+              <Route path="/a-propos" element={<APropos />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </main>
+        </div>
         <footer className="bg-transparent text-[#4ecdc4] p-4 mt-8">
           <div className="container mx-auto text-center">
             <p>© 2024 Geros - Tous droits réservés</p>

@@ -32,7 +32,7 @@ export default function Accueil() {
             </Link>
           </div>
           {/* Indication scroll vers Pourquoi Geros */}
-          <div className="flex flex-col items-center my-16 fade-in fade-in-delay-4">
+          <div className="flex flex-col items-center my-6 fade-in fade-in-delay-4">
             <span className="font-logo holo-title text-xl md:text-2xl font-bold uppercase mb-1 select-none">
               Pourquoi Geros ?
             </span>
@@ -44,8 +44,8 @@ export default function Accueil() {
       </div>
 
       {/* Section Pourquoi Geros ? */}
-      <section className="my-24 px-4 fade-in fade-in-delay-5">
-        <h2 className="title-section text-4xl text-center mb-14 font-bold">Pour repenser la gériatrie&nbsp;!</h2>
+      <section className="my-12 px-4 fade-in fade-in-delay-5">
+        <h2 className="title-section text-4xl text-center mb-8 font-bold">Pour repenser la gériatrie&nbsp;!</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 max-w-6xl mx-auto">
           {/* Formation intelligente */}
           <div className="flex flex-col items-center text-center">
@@ -75,7 +75,7 @@ export default function Accueil() {
       </section>
 
       {/* Section Nos solutions */}
-      <section className="my-24 px-4 fade-in fade-in-delay-6">
+      <section id="nos-solutions" className="my-24 px-4 fade-in fade-in-delay-6">
         <h2 className="title-section text-4xl text-center mb-14 font-bold">Nos solutions</h2>
         <p className="text-main text-2xl text-center mb-14">Nos outils au service de votre impact</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-6xl mx-auto">

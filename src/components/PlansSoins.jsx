@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { HiOutlineClipboardCheck, HiOutlineDocumentText, HiOutlineClock, HiOutlineLockClosed, HiOutlineDownload, HiChevronDown } from 'react-icons/hi'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
+import ChatbotPlanSoins from './ChatbotPlanSoins'
 
 const besoins = [
   'Alimentation',
@@ -158,6 +159,9 @@ export default function PlansSoins() {
         </div>
         <button className="btn-primary self-center mt-4 text-lg px-10 py-3 border-2 border-[#3ed6b6] rounded-lg">Générer le plan</button>
       </form>
+
+      {/* Génération de plan de soins par IA */}
+      <ChatbotPlanSoins />
 
       {result && (
         <div className="bg-[#162024] border border-[#3ed6b6]/30 rounded-2xl shadow-lg p-8 mb-12 max-w-3xl mx-auto">

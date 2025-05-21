@@ -9,17 +9,24 @@ export default function BackgroundEffect() {
     let mouseX = 0;
     let mouseY = 0;
     let animationFrameId;
+    let dpr = window.devicePixelRatio || 1;
 
-    // Ajuster la taille du canvas à la fenêtre
+    // Ajuster la taille du canvas à la fenêtre et au devicePixelRatio
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(1, 0, 0, 1, 0, 0); // reset
+      ctx.scale(dpr, dpr);
     };
 
     // Gérer le mouvement de la souris
     const handleMouseMove = (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      const rect = canvas.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
     };
 
     // Fonction d'animation
@@ -32,32 +39,24 @@ export default function BackgroundEffect() {
       const baseOpacity = 0.05;
       const maxOpacity = 0.3;
       const radius = 200;
+      const DECALAGE_X = 80; // Décalage vers la gauche
+      const DECALAGE_Y = 60; // Décalage vers le haut
 
-      // Dessiner les lignes diagonales
-      for (let x = -gridSize; x < canvas.width + gridSize; x += gridSize) {
-        for (let y = -gridSize; y < canvas.height + gridSize; y += gridSize) {
-          // Calculer la distance entre le point et la souris
-          const dx = x - mouseX;
-          const dy = y - mouseY;
+      for (let x = 0; x < window.innerWidth; x += gridSize) {
+        for (let y = 0; y < window.innerHeight; y += gridSize) {
+          const dx = x - (mouseX - DECALAGE_X);
+          const dy = y - (mouseY - DECALAGE_Y);
           const distance = Math.sqrt(dx * dx + dy * dy);
-          
-          // Calculer l'opacité en fonction de la distance
           let opacity = baseOpacity;
           if (distance < radius) {
             opacity = baseOpacity + (maxOpacity - baseOpacity) * (1 - distance / radius);
           }
-
-          // Dessiner les lignes avec l'opacité calculée
           ctx.strokeStyle = `rgba(78, 205, 196, ${opacity})`;
           ctx.lineWidth = lineWidth;
-          
-          // Ligne diagonale 1
           ctx.beginPath();
           ctx.moveTo(x, y);
           ctx.lineTo(x + gridSize, y + gridSize);
           ctx.stroke();
-          
-          // Ligne diagonale 2
           ctx.beginPath();
           ctx.moveTo(x + gridSize, y);
           ctx.lineTo(x, y + gridSize);
@@ -68,13 +67,11 @@ export default function BackgroundEffect() {
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    // Initialisation
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     window.addEventListener('mousemove', handleMouseMove);
     animate();
 
-    // Nettoyage
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
